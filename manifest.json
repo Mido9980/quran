@@ -2,12 +2,32 @@
   "name": "القرآن الكريم — أوف لاين",
   "short_name": "القرآن",
   "description": "القرآن الكريم كاملاً يعمل بدون إنترنت: قراءة، بحث، أجزاء ومحفوظات.",
-  "lang": "ar", "dir": "rtl",
-  "start_url": "./index.html", "scope": "./", "display": "standalone", "orientation": "portrait",
-  "background_color": "#0b3a34", "theme_color": "#0b3a34",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0B3A34",
+  "theme_color": "#0B3A34",
   "icons": [
-    { "src": "icons/i192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "icons/i512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "icons/i512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    {
+      "src": "icons/i192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/i512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/i512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ]
 }

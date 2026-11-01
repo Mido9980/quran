@@ -1,4 +1,4 @@
-const CACHE = 'quran-v1';
+const CACHE = 'quran-v2';
 const ASSETS = ['./', './index.html', './styles.css', './app.js', './data.js', './amiri.ttf', './manifest.json', './icons/i192.png', './icons/i512.png'];
 self.addEventListener('install', e => { self.skipWaiting(); e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS))); });
 self.addEventListener('activate', e => {
