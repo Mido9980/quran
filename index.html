@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>القرآن الكريم — أوف لاين</title>
+<meta name="description" content="تطبيق القرآن الكريم كامل يعمل بدون إنترنت: قراءة، بحث، أجزاء، ومحفوظات.">
+<meta name="theme-color" content="#0b3a34">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/i192.png">
+<link rel="apple-touch-icon" href="icons/i192.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- شاشة البداية -->
+<div id="splash" class="splash">
+  <div class="splash-in">
+    <div class="logo-big">﷽</div>
+    <h1>القرآن الكريم</h1>
+    <p class="mut">يعمل بدون إنترنت</p>
+    <div class="loadbar"><span id="loadFill"></span></div>
+    <p class="tiny" id="loadTxt">جاري التحميل…</p>
+  </div>
+</div>
+
+<!-- الهيدر -->
+<header class="top" id="top">
+  <button class="ic" id="backBtn" aria-label="رجوع" hidden>‹</button>
+  <div class="brand" id="brandBox">
+    <span class="mark">﷽</span>
+    <div><b>القرآن الكريم</b><i id="brandSub">أوف لاين</i></div>
+  </div>
+  <div class="acts">
+    <button class="ic" id="searchBtn" aria-label="بحث">🔍</button>
+    <button class="ic" id="setBtn" aria-label="إعدادات">⚙️</button>
+  </div>
+</header>
+
+<!-- صفحة الرئيسية -->
+<main id="pgHome" class="page on">
+  <div id="lastRead" class="last" hidden onclick="openLast()">
+    <div class="lr-l"><span class="lr-cap">متابعة القراءة</span><b id="lrName"></b><i id="lrAyah"></i></div>
+    <span class="lr-go">↩</span>
+  </div>
+
+  <div class="searchbox">
+    <input id="q" type="search" placeholder="ابحث في القرآن…" autocomplete="off">
+    <button id="qGo">بحث</button>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <button class="tab on" data-t="surah">السور</button>
+    <button class="tab" data-t="juz">الأجزاء</button>
+    <button class="tab" data-t="saved">المحفوظات</button>
+  </div>
+
+  <div id="listBox"></div>
+</main>
+
+<!-- صفحة القراءة -->
+<main id="pgRead" class="page">
+  <div class="readhead" id="readHead"></div>
+  <div id="ayatBox" class="ayat"></div>
+  <div class="readfoot" id="readFoot"></div>
+</main>
+
+<!-- صفحة البحث -->
+<main id="pgSearch" class="page">
+  <div class="searchbox sticky">
+    <input id="q2" type="search" placeholder="ابحث في القرآن…" autocomplete="off">
+    <button id="q2Go">بحث</button>
+  </div>
+  <div id="resBox"></div>
+</main>
+
+<!-- صفحة الإعدادات -->
+<main id="pgSet" class="page">
+  <div class="card">
+    <h3>حجم خط المصحف</h3>
+    <div class="row"><input id="fs" type="range" min="20" max="46" step="1"><b id="fsVal"></b></div>
+    <div class="sample" id="fsSample">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+  </div>
+  <div class="card">
+    <h3>المظهر</h3>
+    <div class="chips" id="themeChips">
+      <button data-th="light">نهاري</button>
+      <button data-th="sepia">ورقي</button>
+      <button data-th="dark">ليلي</button>
+    </div>
+  </div>
+  <div class="card">
+    <h3>الخط</h3>
+    <div class="chips" id="fontChips">
+      <button data-f="amiri">أميري (عثماني)</button>
+      <button data-f="system">خط الجهاز</button>
+    </div>
+  </div>
+  <div class="card">
+    <h3>التطبيق</h3>
+    <p class="mut small">النص كامل مخزّن داخل التطبيق، ويعمل بدون إنترنت نهائياً. لتثبيته كتطبيق على الأندرويد اضغط «تثبيت».</p>
+    <button class="btn" id="installBtn" hidden>تثبيت التطبيق</button>
+    <button class="btn ghost" id="clearBtn">مسح المحفوظات</button>
+    <p class="tiny mut center">النص: مصحف المدينة (رواية حفص عن عاصم) — EASY CODE</p>
+  </div>
+</main>
+
+<!-- شيت خيارات الآية -->
+<div class="sheet" id="sheet">
+  <div class="sheet-in">
+    <div class="sheet-t" id="sheetT"></div>
+    <button onclick="act('save')">🔖 حفظ الآية</button>
+    <button onclick="act('copy')">📋 نسخ</button>
+    <button onclick="act('share')">📤 مشاركة</button>
+    <button onclick="act('start')">▶️ القراءة من هنا</button>
+    <button class="cancel" onclick="closeSheet()">إلغاء</button>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
