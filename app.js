@@ -310,7 +310,12 @@ const offlineManager = (() => {
 
   async function prepare(manual) {
     if (!('serviceWorker' in navigator) || !location.protocol.startsWith('http')) return;
-    if (await isReady()) { if (manual) { show('✅ التطبيق جاهز ويعمل بدون إنترنت'); setTimeout(hide, 2600); } return; }
+    if (await isReady()) {
+      if (manual) { show('✅ التطبيق جاهز ويعمل بدون إنترنت'); setTimeout(hide, 2600); return; }
+      if (isInApp) { show('✅ محفوظ. عشان يشتغل بدون نت ثبته: افتحه في كروم ← إضافة إلى الشاشة الرئيسية',
+        'افتح في كروم', () => { location.href = 'intent://mido9980.github.io/quran/#Intent;scheme=https;package=com.android.chrome;end'; }); }
+      return;
+    }
     show('⏳ بجهّز التطبيق للعمل بدون نت...');
     try {
       await navigator.serviceWorker.register('sw.js');
