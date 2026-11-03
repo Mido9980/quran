@@ -264,3 +264,78 @@ function boot(){
 document.addEventListener('DOMContentLoaded', boot);
 if (document.readyState !== 'loading') boot();
 })();
+
+
+/* ================= offlineManager: make "offline" obvious and reliable ================= */
+const offlineManager = (() => {
+  const CACHE = 'quran-v3';
+  const FILES = ['./', './index.html', './styles.css', './app.js', './data.js', './amiri.ttf', './manifest.json', './icons/i192.png', './icons/i512.png'];
+  const bar = () => document.getElementById('offbar');
+  const txt = () => document.getElementById('offtxt');
+  const act = () => document.getElementById('offact');
+
+  function show(msg, actionText, actionFn) {
+    const b = bar(); if (!b) return;
+    txt().textContent = msg;
+    if (actionText) { act().style.display = 'inline-block'; act().textContent = actionText; act().onclick = actionFn; }
+    else act().style.display = 'none';
+    b.style.display = 'block';
+    document.body.style.paddingTop = b.offsetHeight + 'px';
+  }
+  function hide() {
+    const b = bar(); if (!b) return;
+    b.style.display = 'none'; document.body.style.paddingTop = '';
+  }
+
+  const isInApp = /WhatsApp|FBAN|FBAV|Instagram|Line\/|MicroMessenger/i.test(navigator.userAgent);
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  async function cacheAll(onProgress) {
+    const c = await caches.open(CACHE);
+    let done = 0;
+    for (const f of FILES) {
+      try { const r = await fetch(f, { cache: 'reload' }); if (r.ok) await c.put(f, r.clone()); }
+      catch (e) {}
+      done++; onProgress && onProgress(done, FILES.length);
+    }
+    return done;
+  }
+
+  async function isReady() {
+    if (!('caches' in window)) return false;
+    const c = await caches.open(CACHE);
+    const keys = await c.keys();
+    return keys.length >= FILES.length - 1;
+  }
+
+  async function prepare(manual) {
+    if (!('serviceWorker' in navigator) || !location.protocol.startsWith('http')) return;
+    if (await isReady()) { if (manual) { show('✅ التطبيق جاهز ويعمل بدون إنترنت'); setTimeout(hide, 2600); } return; }
+    show('⏳ بجهّز التطبيق للعمل بدون نت...');
+    try {
+      await navigator.serviceWorker.register('sw.js');
+      await navigator.serviceWorker.ready;
+    } catch (e) {}
+    await cacheAll((d, n) => { txt().textContent = `⏳ بجهّز التطبيق للعمل بدون نت ${d}/${n}`; });
+    const ok = await isReady();
+    if (ok) {
+      if (isInApp) {
+        show(isIOS ? '✅ جاهز. على الآيفون: افتحه في سفاري واختار «إضافة إلى الشاشة الرئيسية»'
+                   : '✅ جاهز. عشان يفضل أوف لاين نزّله على الشاشة الرئيسية من كروم',
+             isIOS ? 'طريقة التثبيت' : 'افتح في كروم',
+             isIOS ? () => show('من سفاري: زرار المشاركة ← إضافة إلى الشاشة الرئيسية', null)
+                   : () => { location.href = 'intent://mido9980.github.io/quran/#Intent;scheme=https;package=com.android.chrome;end'; });
+      } else {
+        show('✅ التطبيق جاهز ويعمل بدون إنترنت');
+        setTimeout(hide, 3200);
+      }
+    } else {
+      show('⚠ التحميل ما اكتملش — اضغط لإعادة المحاولة', 'إعادة المحاولة', () => prepare(true));
+    }
+  }
+
+  window.addEventListener('online', () => prepare(false));
+  document.addEventListener('DOMContentLoaded', () => setTimeout(() => prepare(false), 800));
+  if (navigator.serviceWorker) navigator.serviceWorker.addEventListener('message', () => prepare(false));
+  return { prepare, isReady };
+})();
