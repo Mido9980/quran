@@ -8,122 +8,124 @@
 <meta name="theme-color" content="#0B3A34">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icons/i192.png">
-<link rel="apple-touch-icon" href="icons/i192.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div id="offbar" style="display:none;position:fixed;top:0;right:0;left:0;z-index:80;background:#123f38;border-bottom:1px solid #1f5d53;padding:9px 14px;font-size:.82rem;color:#eaf6f2;text-align:center">
-  <span id="offtxt"></span>
-  <button id="offact" style="display:none;margin-inline-start:8px;background:#19c9a8;color:#06322b;border:0;border-radius:999px;padding:5px 12px;font-family:inherit;font-weight:700;font-size:.78rem"></button>
-</div>
 
-
-<!-- شاشة البداية -->
 <div id="splash" class="splash">
   <div class="splash-in">
     <div class="logo-big">﷽</div>
-    <h1>القرآن الكريم</h1>
-    <p class="mut">يعمل بدون إنترنت</p>
+    <h1 data-i="app">القرآن الكريم</h1>
+    <p class="mut" data-i="tagline">يعمل بدون إنترنت</p>
     <div class="loadbar"><span id="loadFill"></span></div>
-    <p class="tiny" id="loadTxt">جاري التحميل…</p>
+    <p class="tiny" id="loadTxt">…</p>
   </div>
 </div>
 
-<!-- الهيدر -->
 <header class="top" id="top">
-  <button class="ic" id="backBtn" aria-label="رجوع" hidden>‹</button>
+  <button class="ic" id="backBtn" aria-label="back" hidden>‹</button>
   <div class="brand" id="brandBox">
     <span class="mark">﷽</span>
-    <div><b>القرآن الكريم</b><i id="brandSub">أوف لاين</i></div>
+    <div><b data-i="app">القرآن الكريم</b><i data-i="tagline">يعمل بدون إنترنت</i></div>
   </div>
   <div class="acts">
-    <button class="ic" id="searchBtn" aria-label="بحث">🔍</button>
-    <button class="ic" id="setBtn" aria-label="إعدادات">⚙️</button>
+    <button class="ic" id="langBtn" aria-label="language">🌐</button>
+    <button class="ic" id="themeBtn" aria-label="theme">🌓</button>
+    <button class="ic" id="searchBtn" aria-label="search">🔍</button>
+    <button class="ic" id="setBtn" aria-label="settings">⚙️</button>
   </div>
 </header>
 
-<!-- صفحة الرئيسية -->
 <main id="pgHome" class="page on">
-  <div id="lastRead" class="last" hidden onclick="openLast()">
-    <div class="lr-l"><span class="lr-cap">متابعة القراءة</span><b id="lrName"></b><i id="lrAyah"></i></div>
+  <div id="lastRead" class="last" hidden>
+    <div class="lr-l"><span class="lr-cap" data-i="last_read">متابعة القراءة</span><b id="lrName"></b><i id="lrAyah"></i></div>
     <span class="lr-go">↩</span>
   </div>
 
   <div class="searchbox">
-    <input id="q" type="search" placeholder="ابحث في القرآن…" autocomplete="off">
-    <button id="qGo">بحث</button>
+    <input id="q" type="search" placeholder="ابحث في القرآن…" data-i-ph="search_ph" autocomplete="off">
+    <button id="qGo" data-i="search_btn">بحث</button>
   </div>
 
   <div class="tabs" id="tabs">
-    <button class="tab on" data-t="surah">السور</button>
-    <button class="tab" data-t="juz">الأجزاء</button>
-    <button class="tab" data-t="saved">المحفوظات</button>
+    <button class="tab on" data-t="surah" data-i="tab_surah">السور</button>
+    <button class="tab" data-t="juz" data-i="tab_juz">الأجزاء</button>
+    <button class="tab" data-t="saved" data-i="tab_saved">المحفوظات</button>
   </div>
 
   <div id="listBox"></div>
 </main>
 
-<!-- صفحة القراءة -->
 <main id="pgRead" class="page">
   <div class="readhead" id="readHead"></div>
-  <div id="ayatBox" class="ayat"></div>
+  <div id="ayatBox" class="ayat" dir="rtl"></div>
   <div class="readfoot" id="readFoot"></div>
 </main>
 
-<!-- صفحة البحث -->
 <main id="pgSearch" class="page">
   <div class="searchbox sticky">
-    <input id="q2" type="search" placeholder="ابحث في القرآن…" autocomplete="off">
-    <button id="q2Go">بحث</button>
+    <input id="q2" type="search" placeholder="ابحث في القرآن…" data-i-ph="search_ph" autocomplete="off">
+    <button id="q2Go" data-i="search_btn">بحث</button>
   </div>
   <div id="resBox"></div>
 </main>
 
-<!-- صفحة الإعدادات -->
 <main id="pgSet" class="page">
   <div class="card">
-    <h3>حجم خط المصحف</h3>
+    <h3 data-i="font_size">حجم خط المصحف</h3>
     <div class="row"><input id="fs" type="range" min="20" max="46" step="1"><b id="fsVal"></b></div>
-    <div class="sample" id="fsSample">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+    <div class="sample" id="fsSample" dir="rtl">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
   </div>
   <div class="card">
-    <h3>المظهر</h3>
+    <h3 data-i="appearance">المظهر</h3>
     <div class="chips" id="themeChips">
-      <button data-th="light">نهاري</button>
-      <button data-th="sepia">ورقي</button>
-      <button data-th="dark">ليلي</button>
+      <button data-th="light" data-i="th_light">نهاري</button>
+      <button data-th="sepia" data-i="th_sepia">ورقي</button>
+      <button data-th="dark" data-i="th_dark">ليلي</button>
     </div>
   </div>
   <div class="card">
-    <h3>الخط</h3>
+    <h3 data-i="font">الخط</h3>
     <div class="chips" id="fontChips">
-      <button data-f="amiri">أميري (عثماني)</button>
-      <button data-f="system">خط الجهاز</button>
+      <button data-f="amiri" data-i="font_amiri">أميري (عثماني)</button>
+      <button data-f="system" data-i="font_system">خط الجهاز</button>
     </div>
   </div>
   <div class="card">
-    <h3>التطبيق</h3>
-    <p class="mut small">النص كامل مخزّن داخل التطبيق، ويعمل بدون إنترنت نهائياً. لتثبيته كتطبيق على الأندرويد اضغط «تثبيت».</p>
-    <button class="btn" id="installBtn" hidden>تثبيت التطبيق</button>
-    <button class="btn ghost" id="clearBtn">مسح المحفوظات</button>
-    <p class="tiny mut center">النص: مصحف المدينة (رواية حفص عن عاصم) — EASY CODE</p>
+    <h3 data-i="lang">اللغة</h3>
+    <div class="chips" id="langChipsHome"></div>
+  </div>
+  <div class="card">
+    <h3 data-i="install">التطبيق</h3>
+    <p class="mut small" data-i="install_hint">لتثبيته على الأندرويد…</p>
+    <button class="btn" id="installBtn" hidden data-i="install">تثبيت التطبيق</button>
+    <button class="btn ghost" id="clearBtn" data-i="clear">مسح المحفوظات</button>
+    <p class="tiny mut center" data-i="footer">النص: مصحف المدينة</p>
   </div>
 </main>
 
-<!-- شيت خيارات الآية -->
+<div class="sheet" id="langSheet">
+  <div class="sheet-in">
+    <div class="sheet-t" data-i="lang_title">اختر لغة الواجهة</div>
+    <div id="langList" class="langlist"></div>
+    <button class="cancel" onclick="document.getElementById('langSheet').classList.remove('on')" data-i="close">إغلاق</button>
+  </div>
+</div>
+
 <div class="sheet" id="sheet">
   <div class="sheet-in">
     <div class="sheet-t" id="sheetT"></div>
-    <button onclick="act('save')">🔖 حفظ الآية</button>
-    <button onclick="act('copy')">📋 نسخ</button>
-    <button onclick="act('share')">📤 مشاركة</button>
-    <button onclick="act('start')">▶️ القراءة من هنا</button>
-    <button class="cancel" onclick="closeSheet()">إلغاء</button>
+    <button id="actSave" data-i="save_ayah">حفظ الآية</button>
+    <button id="actCopy" data-i="copy">نسخ</button>
+    <button id="actShare" data-i="share">مشاركة</button>
+    <button id="actStart" data-i="read_here">القراءة من هنا</button>
+    <button class="cancel" id="actCancel" data-i="cancel">إلغاء</button>
   </div>
 </div>
 
 <div id="toast" class="toast"></div>
-
+<script src="i18n.js"></script>
 <script src="data.js"></script>
 <script src="app.js"></script>
 </body>
